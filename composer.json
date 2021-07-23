@@ -1,0 +1,18 @@
+{
+    "name": "m2i-cda-0521/framework",
+    "description": "M2i CDA 05/21 Framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Romain Tello",
+            "email": "romain.tello@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cda0521Framework\\": "src/"
+        }
+    },
+    "require": {}
+}
