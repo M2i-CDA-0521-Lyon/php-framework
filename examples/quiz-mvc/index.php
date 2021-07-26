@@ -2,7 +2,6 @@
 
 require_once __DIR__ . './vendor/autoload.php';
 
-use App\Model\Answer;
 use App\Model\Question;
 
 // Vérifie si l'utilisateur vient de répondre à une question

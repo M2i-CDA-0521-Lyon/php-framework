@@ -27,6 +27,6 @@
         "m2i-cda-0521/framework": "dev-master"
     },
     "require-dev": {
-        "leeoniya/dump-r": "^2.1"
+        "symfony/var-dumper": "^5.3"
     }
 }
