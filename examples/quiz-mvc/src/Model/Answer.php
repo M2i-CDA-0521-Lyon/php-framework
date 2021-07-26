@@ -150,7 +150,7 @@ class Answer
      */ 
     public function setQuestion($question)
     {
-        if (is_null($rightAnswer)) {
+        if (is_null($question)) {
             $this->questionId = null;
         } else {
             $this->questionId = $question->getId();
