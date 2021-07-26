@@ -39,8 +39,13 @@ class SqlDatabaseHandler
      */
     private function __construct()
     {
+        // Récupère le contenu du fichier database.json défini dans le dossier du projet client
+        $fileContent = \file_get_contents('database.json');
+        // Interpréte le contenu du fichier JSON comme un tableau associatif
+        $config = \json_decode($fileContent, true);
+
         // Configure la connexion à la base de données
-        $this->pdo = new PDO('mysql:host=localhost;dbname=quiz', 'root', 'root');
+        $this->pdo = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'], $config['username'], $config['password']);
     }
 
     /**
