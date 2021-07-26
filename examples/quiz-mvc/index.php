@@ -20,7 +20,7 @@ if ($formSubmitted) {
 }
 
 // Récupère la question actuelle en base de données
-$question = Truc::findById(1);
+$question = Question::findById(1);
 
 ?>
 
