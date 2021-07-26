@@ -1,5 +1,9 @@
 <?php
 
+// Active l'affichage des erreurs dans la page lors de l'utilisation du serveur local de PHP
+ini_set('display_errors', 1);
+
+// Active le chargement automatique des classes dans le projet
 require_once __DIR__ . './vendor/autoload.php';
 
 use App\Model\Question;
@@ -16,7 +20,7 @@ if ($formSubmitted) {
 }
 
 // Récupère la question actuelle en base de données
-$question = Question::findById(1);
+$question = Truc::findById(1);
 
 ?>
 
