@@ -20,4 +20,6 @@
 
 > `php -S localhost:8000`
 
+- Ajouter un fichier `database.json` dans ce dossier (sur le modèle de `database.example.json`) afin de spécifier l'adresse de votre serveur de base de données, le nom de la base de données, ainsi que les identifiants permettant de s'y connecter.
+
 L'application est alors accessible à partir de http://localhost:8000.

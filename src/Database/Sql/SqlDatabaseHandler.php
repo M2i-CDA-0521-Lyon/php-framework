@@ -39,10 +39,12 @@ class SqlDatabaseHandler
      */
     private function __construct()
     {
+        // TODO Vérifier que le fichier de configuration existe
         // Récupère le contenu du fichier database.json défini dans le dossier du projet client
         $fileContent = \file_get_contents('database.json');
         // Interpréte le contenu du fichier JSON comme un tableau associatif
         $config = \json_decode($fileContent, true);
+        // TODO Vérifier que le fichier de configuration contient bien toutes les informations attendues
 
         // Configure la connexion à la base de données
         $this->pdo = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'], $config['username'], $config['password']);
