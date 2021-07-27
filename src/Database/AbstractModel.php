@@ -6,7 +6,10 @@ use ReflectionClass;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
-class AbstractModel
+/**
+ * Classe regroupant le code commun à tous les modèles
+ */
+abstract class AbstractModel
 {
     /**
      * Récupére tous les éléments de la table associée à la classe appelante sous forme d'objets
