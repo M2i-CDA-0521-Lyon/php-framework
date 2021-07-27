@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\Platform;
 use App\Model\Developer;
+use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\AbstractModel;
 
 /**
