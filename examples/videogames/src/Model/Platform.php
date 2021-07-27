@@ -12,7 +12,7 @@ class Platform extends AbstractModel
 {
     /**
      * Identifiant en base de données
-     * @var int
+     * @var int|null
      */
     protected ?int $id;
     /**
