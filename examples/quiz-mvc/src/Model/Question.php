@@ -2,16 +2,16 @@
 
 namespace App\Model;
 
+use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\AbstractModel;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente une question
  */
+#[Table('question')]
 class Question extends AbstractModel
 {
-    static string $tableName = 'question';
-
     /**
      * Identifiant en base de données
      * @var integer|null
