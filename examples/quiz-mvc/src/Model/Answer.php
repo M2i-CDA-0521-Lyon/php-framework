@@ -29,24 +29,6 @@ class Answer extends AbstractModel
     private ?int $questionId;
 
     /**
-     * Récupère un élément en base de données en fonction des on identifiant
-     *
-     * @return Answer[]
-     */
-    static public function findWhere(string $columnName, string $value): array
-    {
-        $data = SqlDatabaseHandler::fetchWhere('answer', $columnName, $value);
-        foreach ($data as $item) {
-            $result []= new Answer(
-                $item['id'],
-                $item['text'],
-                $item['question_id']
-            );
-        }
-        return $result;
-    }
-
-    /**
      * Crée une nouvelle réponse
      *
      * @param integer|null $id Identifiant en base de données

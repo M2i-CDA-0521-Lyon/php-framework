@@ -9,9 +9,7 @@ use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 class AbstractModel
 {
     /**
-     * Récupére tous les éléments d'une table sous forme d'objets
-     *
-     * @return void
+     * Récupére tous les éléments de la table associée à la classe appelante sous forme d'objets
      */
     static public function findAll()
     {
@@ -32,10 +30,9 @@ class AbstractModel
     }
 
     /**
-     * Récupère un élément d'une table en fonction de son identifiant en base de données sous forme d'objet
+     * Récupère un élément de la table associée à la classe appelante en fonction de son identifiant en base de données sous forme d'objet
      *
      * @param integer $id Identifiant en base de données de l'élément désiré
-     * @return void
      */
     static public function findById(int $id)
     {
@@ -47,6 +44,31 @@ class AbstractModel
             return null;
         }
         return new $className(...$item);
+    }
+
+    /**
+     * Récupère tous les éléments de la table associée à la classe appelante en pour lesquels un critère donné correspond à une valeur donnée
+     *
+     * @param string $columnName Le nom de la colonne à comparer
+     * @param string $value La valeur recherchée dans la colonne
+     */
+    static public function findWhere(string $columnName, string $value)
+    {
+        // Récupère le nom de la classe qui a appelé cette méthode
+        $className = get_called_class();
+
+        // Récupère tous les enregistrements de la table concernée
+        $data = SqlDatabaseHandler::fetchWhere(static::getTableName(), $columnName, $value);
+        // Pour chaque enregistrement
+        foreach ($data as $item) {
+            // Construit un objet de la classe concernée
+            // Dans la mesure où chaque table posséde un nombre de colonnes différent
+            // (et donc que chaque classe attend un nombre de propriétés différent),
+            // utilise l'opérateur ... pour "déplier" la liste des données de l'enregistrement
+            // afin de les passer comme des paramètres séparés au constructeur de la classe
+            $result []= new $className(...$item);
+        }
+        return $result;
     }
 
     /**
