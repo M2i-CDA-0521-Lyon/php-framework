@@ -10,6 +10,8 @@ use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
  */
 class Question extends AbstractModel
 {
+    static string $tableName = 'question';
+
     /**
      * Identifiant en base de données
      * @var integer|null
@@ -50,26 +52,6 @@ class Question extends AbstractModel
         $this->text = $text;
         $this->rank = $rank;
         $this->rightAnswerId = $rightAnswerId;
-    }
-
-    /**
-     * Récupère tous les éléments en base de données
-     *
-     * @return Question[]
-     */
-    static public function findAll(): array
-    {
-        return static::findAllInTable('question', Question::class);
-    }
-
-    /**
-     * Récupère un élément en base de données en fonction des on identifiant
-     *
-     * @return Question|null
-     */
-    static public function findById(int $id): ?Question
-    {
-        return static::findByIdInTable($id, 'question', Question::class);
     }
 
     /**

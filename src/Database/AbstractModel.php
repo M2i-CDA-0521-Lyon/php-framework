@@ -6,10 +6,12 @@ use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 class AbstractModel
 {
-    static public function findAllInTable(string $tableName, string $className)
+    static public function findAll()
     {
+        // Récupère le nom de la classe qui a appelé cette méthode
+        $className = get_called_class();
         // Récupère tous les enregistrements de la table concernée
-        $data = SqlDatabaseHandler::fetchAll($tableName);
+        $data = SqlDatabaseHandler::fetchAll($className::$tableName);
         // Pour chaque enregistrement
         foreach ($data as $item) {
             // Construit un objet de la classe concernée
@@ -22,9 +24,12 @@ class AbstractModel
         return $result;
     }
 
-    static public function findByIdInTable(int $id, string $tableName, string $className)
+    static public function findById(int $id)
     {
-        $item = SqlDatabaseHandler::fetchById($tableName, $id);
+        // Récupère le nom de la classe qui a appelé cette méthode
+        $className = get_called_class();
+
+        $item = SqlDatabaseHandler::fetchById($className::$tableName, $id);
         if (is_null($item)) {
             return null;
         }
