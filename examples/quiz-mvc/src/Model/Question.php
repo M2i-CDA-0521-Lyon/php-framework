@@ -2,12 +2,13 @@
 
 namespace App\Model;
 
+use Cda0521Framework\Database\AbstractModel;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente une question
  */
-class Question
+class Question extends AbstractModel
 {
     /**
      * Identifiant en base de données
@@ -58,16 +59,7 @@ class Question
      */
     static public function findAll(): array
     {
-        $data = SqlDatabaseHandler::fetchAll('question');
-        foreach ($data as $item) {
-            $result []= new Question(
-                $item['id'],
-                $item['text'],
-                $item['rank'],
-                $item['right_answer_id']
-            );
-        }
-        return $result;
+        return static::findAllInTable('question', Question::class);
     }
 
     /**
@@ -77,16 +69,7 @@ class Question
      */
     static public function findById(int $id): ?Question
     {
-        $item = SqlDatabaseHandler::fetchById('question', $id);
-        if (is_null($item)) {
-            return $item;
-        }
-        return new Question(
-            $item['id'],
-            $item['text'],
-            $item['rank'],
-            $item['right_answer_id']
-        );
+        return static::findByIdInTable($id, 'question', Question::class);
     }
 
     /**
