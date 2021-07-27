@@ -4,7 +4,7 @@
 ini_set('display_errors', 1);
 
 // Active le chargement automatique des classes dans le projet
-require_once __DIR__ . './vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Model\Question;
 
