@@ -23,16 +23,16 @@ class Question extends AbstractModel
      */
     private string $text;
     /**
-     * Rang de la question
-     * @var integer|null
-     */
-    private ?int $rank;
-    /**
      * Identifiant en base de données de la bonne réponse
      * @var integer|null
      */
     private ?int $rightAnswerId;
-
+    /**
+     * Rang de la question
+     * @var integer|null
+     */ 
+    private ?int $rank;
+    
     /**
      * Crée une nouvelle question
      *
@@ -44,14 +44,14 @@ class Question extends AbstractModel
     public function __construct(
         ?int $id = null,
         string $text = '',
-        ?int $rank = null,
-        ?int $rightAnswerId = null
+        ?int $rightAnswerId = null,
+        ?int $rank = null
     )
     {
         $this->id = $id;
         $this->text = $text;
-        $this->rank = $rank;
         $this->rightAnswerId = $rightAnswerId;
+        $this->rank = $rank;
     }
 
     /**
