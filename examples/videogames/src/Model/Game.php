@@ -6,6 +6,7 @@ use App\Model\Platform;
 use App\Model\Developer;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\AbstractModel;
+use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente un jeu vidéo
@@ -69,32 +70,12 @@ class Game extends AbstractModel
      */
     protected function create()
     {
-        // Configure une connexion au serveur de base de données
-        $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
-        // Crée un modèle de requête "à trous" dans lequel on pourra injecter des variables
-        $statement = $databaseHandler->prepare('INSERT INTO `game`
-            (
-                `title`,
-                `link`,
-                `release_date`,
-                `developer_id`,
-                `platform_id`
-            )
-            VALUES (
-                :title,
-                :link,
-                :release_date,
-                :developer_id,
-                :platform_id
-            )'
-        );
-        // Exécute la requête en remplaçant chaque champ variable par la valeur associée dans le tableau
-        $statement->execute([
-            ':title' => $this->title,
-            ':link' => $this->link,
-            ':release_date' => $this->releaseDate->format('Y-m-d H:i:s'),
-            ':developer_id' => $this->developerId,
-            ':platform_id' => $this->platformId,
+        $this->id = SqlDatabaseHandler::insert('game', [
+            'title' => $this->title,
+            'link' => $this->link,
+            'release_date' => $this->releaseDate->format('Y-m-d H:i:s'),
+            'developer_id' => $this->developerId,
+            'platform_id' => $this->platformId,
         ]);
     }
 
@@ -105,26 +86,12 @@ class Game extends AbstractModel
      */
     protected function update()
     {
-        // Configure une connexion au serveur de base de données
-        $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
-        // Crée un modèle de requête "à trous" dans lequel on pourra injecter des variables
-        $statement = $databaseHandler->prepare('UPDATE `game`
-            SET
-                `title` = :title,
-                `link` = :link,
-                `release_date` = :release_date,
-                `developer_id` = :developer_id,
-                `platform_id` = :platform_id
-            WHERE `id` = :id
-        ');
-        // Exécute la requête en remplaçant chaque champ variable par la valeur associée dans le tableau
-        $statement->execute([
-            ':id' => $this->id,
-            ':title' => $this->title,
-            ':link' => $this->link,
-            ':release_date' => $this->releaseDate->format('Y-m-d H:i:s'),
-            ':developer_id' => $this->developerId,
-            ':platform_id' => $this->platformId,
+        SqlDatabaseHandler::update('game', $this->id, [
+            'title' => $this->title,
+            'link' => $this->link,
+            'release_date' => $this->releaseDate->format('Y-m-d H:i:s'),
+            'developer_id' => $this->developerId,
+            'platform_id' => $this->platformId,
         ]);
     }
 
@@ -135,14 +102,9 @@ class Game extends AbstractModel
      */
     public function delete()
     {
-        // Configure une connexion au serveur de base de données
-        $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
-        // Crée un modèle de requête "à trous" dans lequel on pourra injecter des variables
-        $statement = $databaseHandler->prepare('DELETE FROM `game` WHERE `id` = :id');
-        // Exécute la requête préparée en remplaçant chaque champ variable par le contenu reçu du champ correspondant dans le formulaire
-        $statement->execute([
-            ':id' => $this->id
-        ]);
+        SqlDatabaseHandler::delete('game', $this->id);
+        // Remet l'identifiant à zéro
+        $this->id = null;
     }
 
     /**

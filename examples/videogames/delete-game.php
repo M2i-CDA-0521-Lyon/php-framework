@@ -17,6 +17,7 @@ try {
 
     // Récupère une copie de l'enregistrement à supprimer sous forme d'objet
     $game = Game::findById($_POST['id']);
+
     // Supprime un enregistrement existant en base de données correspondant à cet objet
     $game->delete();
 
