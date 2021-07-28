@@ -165,7 +165,7 @@ $platforms = Platform::findAll();
                                 </form>
                             </td>
                             <td>
-                                <form method="post" action="actions/delete-game.php">
+                                <form method="post" action="delete-game.php">
                                     <input type="hidden" name="id" value="<?= $game->getId() ?>" />
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash-alt"></i>

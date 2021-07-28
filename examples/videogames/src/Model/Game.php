@@ -111,6 +111,23 @@ class Game extends AbstractModel
     }
 
     /**
+     * Supprime un enregistrement existant en base de données correspondant à cet objet
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        // Configure une connexion au serveur de base de données
+        $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
+        // Crée un modèle de requête "à trous" dans lequel on pourra injecter des variables
+        $statement = $databaseHandler->prepare('DELETE FROM `game` WHERE `id` = :id');
+        // Exécute la requête préparée en remplaçant chaque champ variable par le contenu reçu du champ correspondant dans le formulaire
+        $statement->execute([
+            ':id' => $this->id
+        ]);
+    }
+
+    /**
      * Crée un nouveau jeu
      *
      * @param integer|null $id Identifiant en base de données
