@@ -108,8 +108,8 @@ $platforms = Platform::findAll();
                 </thead>
                 <tbody>
                     <?php foreach ($games as $game): ?>
-                        <?php if (isset($_GET['edit']) && $_GET['edit'] === $game->getId()): ?>
-                        <form method="post" action="actions/edit-game.php">
+                        <?php if (isset($_GET['edit']) && intval($_GET['edit']) === $game->getId()): ?>
+                        <form method="post" action="edit-game.php">
                             <input type="hidden" name="id" value="<?= $game->getId() ?>" />
                             <tr>
                                 <th scope="row"><?= $game->getId() ?></th>
@@ -119,7 +119,7 @@ $platforms = Platform::findAll();
                                     <input type="text" name="link" placeholder="External link" value="<?= $game->getLink() ?>" />
                                 </td>
                                 <td>
-                                    <input type="date" name="release_date" value="<?= $game->getReleaseDate()->format('F j, Y') ?>" />
+                                    <input type="date" name="release_date" value="<?= $game->getReleaseDate()->format('Y-m-d') ?>" />
                                 </td>
                                 <td>
                                     <select name="developer">
