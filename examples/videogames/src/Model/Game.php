@@ -43,13 +43,31 @@ class Game extends AbstractModel
      * @var int|null
      */
     protected ?int $platformId;
+
+    /**
+     * Répercute l'état actuel de l'objet sur un enregistrement en base de données
+     *
+     * @return void
+     */
+    public function save()
+    {
+        // Si aucun l'objet n'a pas d'idenitfiant, c'est donc qu'aucun enregistrement correspondant n'existe encore en base de données
+        if (is_null($this->id)) {
+            // Crée un nouvel enregistrement en base de données à partir des informations contenues dans l'objet
+            $this->create();
+        // Sinon, c'est donc qu'il existe déjà un enregistrement correspondant en base de données
+        } else {
+            // Met à jour un enregistrement existant en base de données à partir des propriétés de cet objet
+            $this->update();
+        }
+    }
     
     /**
      * Crée un nouvel enregistrement en base de données à partir des propriétés de cet objet
      *
      * @return void
      */
-    public function create()
+    protected function create()
     {
         // Configure une connexion au serveur de base de données
         $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
@@ -85,7 +103,7 @@ class Game extends AbstractModel
      *
      * @return void
      */
-    public function update()
+    protected function update()
     {
         // Configure une connexion au serveur de base de données
         $databaseHandler = new \PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
