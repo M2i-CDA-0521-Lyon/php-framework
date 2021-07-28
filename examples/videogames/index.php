@@ -175,7 +175,7 @@ $platforms = Platform::findAll();
                         </tr>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                    <form method="post" action="actions/edit-game.php">
+                    <form method="post" action="edit-game.php">
                         <tr>
                             <th scope="row"></th>
                             <td>
