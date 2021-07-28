@@ -1,5 +1,11 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Model\Game;
+use App\Model\Platform;
+use App\Model\Developer;
+
 $errorMessages = [
     2 => 'Form should not have empty fields.',
     22001 => 'Form field value is too long.',
@@ -10,31 +16,9 @@ if (isset($_GET['order-by'])) {
     $orderBy = $_GET['order-by'];
 }
 
-$sql = 'SELECT
-`game`.`id`,
-`game`.`title`,
-`game`.`release_date`,
-`game`.`link`,
-`game`.`developer_id`,
-`game`.`platform_id`,
-`developer`.`name` as `developer_name`,
-`developer`.`link` as `developer_link`,
-`platform`.`name` as `platform_name`,
-`platform`.`link` as `platform_link`
-FROM `game`
-JOIN `developer` ON `game`.`developer_id` = `developer`.`id`
-JOIN `platform` ON `game`.`platform_id` = `platform`.`id`
-ORDER BY `' . $orderBy . '`';
-
-$databaseHandler = new PDO('mysql:host=localhost;dbname=videogames', 'root', 'root');
-$statement = $databaseHandler->query($sql);
-$games = $statement->fetchAll();
-
-$statement = $databaseHandler->query('SELECT * FROM `developer`');
-$developers = $statement->fetchAll();
-
-$statement = $databaseHandler->query('SELECT * FROM `platform`');
-$platforms = $statement->fetchAll();
+$games = Game::findAll();
+$developers = Developer::findAll();
+$platforms = Platform::findAll();
 
 ?>
 
@@ -124,30 +108,30 @@ $platforms = $statement->fetchAll();
                 </thead>
                 <tbody>
                     <?php foreach ($games as $game): ?>
-                        <?php if (isset($_GET['edit']) && $_GET['edit'] === $game['id']): ?>
+                        <?php if (isset($_GET['edit']) && $_GET['edit'] === $game->getId()): ?>
                         <form method="post" action="actions/edit-game.php">
-                            <input type="hidden" name="id" value="<?= $game['id'] ?>" />
+                            <input type="hidden" name="id" value="<?= $game->getId() ?>" />
                             <tr>
-                                <th scope="row"><?= $game['id'] ?></th>
+                                <th scope="row"><?= $game->getId() ?></th>
                                 <td>
-                                    <input type="text" name="title" placeholder="Title" value="<?= $game['title'] ?>" />
+                                    <input type="text" name="title" placeholder="Title" value="<?= $game->getTitle() ?>" />
                                     <br />
-                                    <input type="text" name="link" placeholder="External link" value="<?= $game['link'] ?>" />
+                                    <input type="text" name="link" placeholder="External link" value="<?= $game->getLink() ?>" />
                                 </td>
                                 <td>
-                                    <input type="date" name="release_date" value="<?= $game['release_date'] ?>" />
+                                    <input type="date" name="release_date" value="<?= $game->getReleaseDate()->format('F j, Y') ?>" />
                                 </td>
                                 <td>
                                     <select name="developer">
                                         <?php foreach ($developers as $developer): ?>
-                                        <option value="<?= $developer['id'] ?>" <?php if ($developer['id'] === $game['developer_id']) echo 'selected' ?>><?= $developer['name'] ?></option>
+                                        <option value="<?= $developer->getId() ?>" <?php if ($developer->getId() === $game->getDeveloper()->getId()) echo 'selected' ?>><?= $developer->getName() ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
                                 <td>
                                     <select name="platform">
                                         <?php foreach ($platforms as $platform): ?>
-                                        <option value="<?= $platform['id'] ?>" <?php if ($platform['id'] === $game['platform_id']) echo 'selected' ?>><?= $platform['name'] ?></option>
+                                        <option value="<?= $platform->getId() ?>" <?php if ($platform->getId() === $game->getPlatform()->getId()) echo 'selected' ?>><?= $platform->getName() ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
@@ -161,20 +145,20 @@ $platforms = $statement->fetchAll();
                         </form>
                         <?php else: ?>
                         <tr>
-                            <th scope="row"><?= $game['id'] ?></th>
+                            <th scope="row"><?= $game->getId() ?></th>
                             <td>
-                                <a href="<?= $game['link'] ?>" target="_blank"><?= $game['title'] ?></a>
+                                <a href="<?= $game->getLink() ?>" target="_blank"><?= $game->getTitle() ?></a>
                             </td>
-                            <td><?php $date = new DateTime($game['release_date']); echo $date->format('F j, Y') ?></td>
+                            <td><?= $game->getReleaseDate()->format('F j, Y') ?></td>
                             <td>
-                                <a href="<?= $game['developer_link'] ?>" target="_blank"><?= $game['developer_name'] ?></a>
+                                <a href="<?= $game->getDeveloper()->getLink() ?>" target="_blank"><?= $game->getDeveloper()->getName() ?></a>
                             </td>
                             <td>
-                                <a href="<?= $game['platform_link'] ?>" target="_blank"><?= $game['platform_name'] ?></a>
+                                <a href="<?= $game->getPlatform()->getLink() ?>" target="_blank"><?= $game->getPlatform()->getName() ?></a>
                             </td>
                             <td>
                                 <form>
-                                    <input type="hidden" name="edit" value="<?= $game['id'] ?>" />
+                                    <input type="hidden" name="edit" value="<?= $game->getId() ?>" />
                                     <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -182,7 +166,7 @@ $platforms = $statement->fetchAll();
                             </td>
                             <td>
                                 <form method="post" action="actions/delete-game.php">
-                                    <input type="hidden" name="id" value="<?= $game['id'] ?>" />
+                                    <input type="hidden" name="id" value="<?= $game->getId() ?>" />
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
@@ -205,14 +189,14 @@ $platforms = $statement->fetchAll();
                             <td>
                                 <select name="developer">
                                     <?php foreach ($developers as $developer): ?>
-                                    <option value="<?= $developer['id'] ?>"><?= $developer['name'] ?></option>
+                                    <option value="<?= $developer->getId() ?>"><?= $developer->getName() ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
                             <td>
                                 <select name="platform">
                                     <?php foreach ($platforms as $platform): ?>
-                                    <option value="<?= $platform['id'] ?>"><?= $platform['name'] ?></option>
+                                    <option value="<?= $platform->getId() ?>"><?= $platform->getName() ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
