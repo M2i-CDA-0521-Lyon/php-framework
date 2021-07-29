@@ -7,6 +7,9 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use AltoRouter;
+use App\View\HomeView;
+use App\View\PlayView;
+use App\Model\Question;
 
 // Instancie le routeur
 $router = new AltoRouter();
@@ -17,20 +20,46 @@ $router->map(
   'GET',
   '/',
   function() {
-    echo 'Page d\'accueil';
-  }
+    return new HomeView();
+  },
+  'home'
 );
 // Page "jouer au quiz"
 $router->map(
-  'GET|POST',
+  'GET',
   '/play',
   function() {
-    include 'play.php';
-  }
+    // Récupère la question actuelle en base de données
+    $question = Question::findById(1);
+
+    return new PlayView($question);
+  },
+  'play'
+);
+// Traitement de la réponse à la page "jouer au quiz"
+$router->map(
+  'POST',
+  '/play',
+  function() {
+    // Vérifie que tous les champs nécessaires sont bien présents
+    if (isset($_POST['answer']) && isset($_POST['current-question'])) {
+      // Récupère la question précédente en base de données avec sa bonne réponse
+      $previousQuestion = Question::findById($_POST['current-question']);
+      // Vérifie si la réponse fournie par l'utilisateur correspond à la bonne réponse à la question précédente
+      $rightlyAnswered = intval($_POST['answer']) === $previousQuestion->getRightAnswer()->getId();
+    }
+
+    // Récupère la question suivante en base de données
+    $question = Question::findById(1);
+
+    return new PlayView($question, $rightlyAnswered);
+  },
+  'process_answer'
 );
 
 // Cherche une correspondance entre les routes connues et la requête du client
 $match = $router->match();
+dd($match);
 // Si aucune correspondance n'a été trouvée, affiche la page 404
 if ($match === false) {
   // Renvoie le code d'erreur "non trouvé" avec la réponse HTTP
@@ -39,7 +68,9 @@ if ($match === false) {
   die();
 }
 
-// Comme la cible de la route contient une fonction, exécute la fonction récupérée par le routeur
-call_user_func_array( $match['target'], $match['params'] );
+// Comme la cible de la route contient une fonction, exécute la fonction récupérée par le routeur et récupère la vue renvoyée par cette fonction
+$response = call_user_func_array( $match['target'], $match['params'] );
+// Demande à la vue de construire la page
+$response->send();
 
 die();
