@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Cda0521Framework\Database\Sql\Table;
+use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
@@ -21,11 +22,13 @@ class Answer extends AbstractModel
      * Texte de la réponse
      * @var string
      */
+    #[Column('text')]
     private string $text;
     /**
      * Identifiant en base de données de la question à laquelle la réponse est associée
      * @var int|null
      */
+    #[Column('question_id')]
     private ?int $questionId;
 
     /**

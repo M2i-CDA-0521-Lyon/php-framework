@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Cda0521Framework\Database\Sql\Table;
+use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
@@ -21,16 +22,19 @@ class Question extends AbstractModel
      * Texte de la question
      * @var string
      */
+    #[Column('text')]
     private string $text;
     /**
      * Identifiant en base de données de la bonne réponse
      * @var integer|null
      */
+    #[Column('right_answer_id')]
     private ?int $rightAnswerId;
     /**
      * Rang de la question
      * @var integer|null
      */ 
+    #[Column('rank')]
     private ?int $rank;
     
     /**

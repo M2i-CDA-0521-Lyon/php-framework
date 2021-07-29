@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Cda0521Framework\Database\Sql\Table;
+use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
 
 /**
@@ -20,11 +21,13 @@ class Platform extends AbstractModel
      * Nom de la plateforme
      * @var string
      */
+    #[Column('name')]
     protected string $name;
     /**
      * Lien vers la page de la plateforme
      * @var string
      */
+    #[Column('link')]
     protected string $link;
     
     /**

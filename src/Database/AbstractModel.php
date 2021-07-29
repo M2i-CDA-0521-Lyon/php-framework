@@ -4,6 +4,7 @@ namespace Cda0521Framework\Database;
 
 use ReflectionClass;
 use Cda0521Framework\Database\Sql\Table;
+use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
@@ -70,6 +71,90 @@ abstract class AbstractModel
             // utilise l'opérateur ... pour "déplier" la liste des données de l'enregistrement
             // afin de les passer comme des paramètres séparés au constructeur de la classe
             $result []= new $className(...$item);
+        }
+        return $result;
+    }
+
+    /**
+     * Supprime un enregistrement existant en base de données correspondant à cet objet
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        SqlDatabaseHandler::delete(static::getTableName(), $this->id);
+        // Remet l'identifiant à zéro
+        $this->id = null;
+    }
+
+    /**
+     * Répercute l'état actuel de l'objet sur un enregistrement en base de données
+     *
+     * @return void
+     */
+    public function save()
+    {
+        // Si aucun l'objet n'a pas d'idenitfiant, c'est donc qu'aucun enregistrement correspondant n'existe encore en base de données
+        if (is_null($this->id)) {
+            // Crée un nouvel enregistrement en base de données à partir des informations contenues dans l'objet
+            $this->create();
+        // Sinon, c'est donc qu'il existe déjà un enregistrement correspondant en base de données
+        } else {
+            // Met à jour un enregistrement existant en base de données à partir des propriétés de cet objet
+            $this->update();
+        }
+    }
+
+    /**
+     * Crée un nouvel enregistrement en base de données à partir des propriétés de cet objet
+     *
+     * @return void
+     */
+    protected function create()
+    {
+        $this->id = SqlDatabaseHandler::insert(static::getTableName(), $this->getProperties());
+    }
+
+    /**
+     * Met à jour un enregistrement existant en base de données à partir des propriétés de cet objet
+     *
+     * @return void
+     */
+    protected function update()
+    {
+        SqlDatabaseHandler::update(static::getTableName(), $this->id, $this->getProperties());
+    }
+
+    /**
+     * Récupère l'ensemble des propriétés de l'objet sous forme d'un tableau de noms de colonnes/valeurs à envoyer en base de données
+     *
+     * @return void
+     */
+    protected function getProperties(): array
+    {
+        // Crée un objet permettant d'accéder aux propriétés de la classe appelante
+        $reflection = new ReflectionClass(get_called_class());
+        // Pour chaque propriété définie dans la classe
+        foreach ($reflection->getProperties() as $property) {
+            // Pour chaque attribut associé à la propriété
+            foreach ($property->getAttributes() as $reflectionAttribute) {
+                // Instancie l'attribut afin de pouvoir le manipuler
+                $attribute = $reflectionAttribute->newInstance();
+                // Si l'attribut représente une colonne en base de données
+                if ($attribute instanceof Column) {
+                    // Récupère le nom de la colonne
+                    $columnName = $attribute->getName();
+                    // Récupère le nom de la propriété et sa valeur dans l'objet
+                    $propertyName = $property->getName();
+                    $value = $this->$propertyName;
+                    // Si la propriété représente une date, sérialise cette date
+                    if ($value instanceof \DateTime) {
+                        $value = $value->format('Y-m-d H:i:s');
+                    }
+                    // Ajoute une entrée associant le nom de la colonne à la valeur de la propriété dans l'objet
+                    $result [$columnName] = $value;
+                }
+            }
         }
         return $result;
     }

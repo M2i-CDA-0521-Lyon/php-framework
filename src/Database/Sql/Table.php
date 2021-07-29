@@ -7,7 +7,7 @@ use Attribute;
 /**
  * Attribut représentant la table d'une base de données SQL associée à une classe
  */
-#[Attribute]
+#[Attribute(Attribute::TARGET_CLASS)]
 class Table
 {
     /**
