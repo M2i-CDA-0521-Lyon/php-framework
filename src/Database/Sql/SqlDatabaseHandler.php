@@ -159,7 +159,7 @@ class SqlDatabaseHandler
      * @param integer $id L'identifiant de l'enregistrement à supprimer
      * @return void
      */
-    static public function delete(string $tableName, int $id)
+    static public function delete(string $tableName, int $id): void
     {
         $statement = self::getInstance()->pdo->prepare('DELETE FROM `' . $tableName . '` WHERE `id` = :id');
         $statement->execute([ ':id' => $id ]);
