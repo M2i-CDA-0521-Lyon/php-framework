@@ -14,5 +14,7 @@
             "Cda0521Framework\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "altorouter/altorouter": "^2.0"
+    }
 }
