@@ -13,6 +13,30 @@ use Cda0521Framework\Interfaces\ControllerInterface;
 class ProcessAnswerController implements ControllerInterface
 {
     /**
+     * La question à passer à la vue
+     * @var Question
+     */
+    private Question $question;
+
+    /**
+     * Crée un nouveau contrôleur
+     *
+     * @param integer $id Identifiant en base de données de la question à passer à la vue
+     */
+    public function __construct(int $id)
+    {
+        // Récupère la question demandée par le client
+        $question = Question::findById($id);
+
+        // Si la question n'existe pas, renvoie à la page 404
+        if (is_null($question)) {
+            throw new NotFoundException('Question #' . $id . ' does not exist.');
+        }
+
+        $this->question = $question;
+    }
+
+    /**
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
@@ -21,16 +45,15 @@ class ProcessAnswerController implements ControllerInterface
     public function invoke(): AbstractView
     {
         // Vérifie que tous les champs nécessaires sont bien présents
-        if (isset($_POST['answer']) && isset($_POST['current-question'])) {
-            // Récupère la question précédente en base de données avec sa bonne réponse
-            $previousQuestion = Question::findById($_POST['current-question']);
+        if (isset($_POST['answer'])) {
             // Vérifie si la réponse fournie par l'utilisateur correspond à la bonne réponse à la question précédente
-            $rightlyAnswered = intval($_POST['answer']) === $previousQuestion->getRightAnswer()->getId();
+            $rightlyAnswered = intval($_POST['answer']) === $this->question->getRightAnswer()->getId();
         }
     
         // Récupère la question suivante en base de données
-        $question = Question::findById(1);
-    
-        return new PlayView($question, $rightlyAnswered);
+        $nextQuestion = Question::findWhere('rank', $this->question->getRank() + 1)[0];
+
+        // Redirige vers la page présentant la question suivante
+        header('Location: /play/' . $nextQuestion->getId());
     }
 }

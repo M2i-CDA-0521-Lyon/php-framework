@@ -33,7 +33,6 @@
 
         </div>
 
-        <input type="hidden" name="current-question" value="<?= $question->getId() ?>" />
         <button type="submit" class="btn btn-primary">Valider</button>
     </form>
 </div>

@@ -7,13 +7,13 @@
     },
     {
         "method": "GET",
-        "uri": "/play",
+        "uri": "/play/[i:id]",
         "controller": "PlayController",
         "name": "play"
     },
     {
         "method": "POST",
-        "uri": "/play",
+        "uri": "/play/[i:id]",
         "controller": "ProcessAnswerController",
         "name": "process_answer"
     }

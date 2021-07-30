@@ -51,7 +51,7 @@ abstract class AbstractModel
     }
 
     /**
-     * Récupère tous les éléments de la table associée à la classe appelante en pour lesquels un critère donné correspond à une valeur donnée
+     * Récupère tous les éléments de la table associée à la classe appelante  pour lesquels un critère donné correspond à une valeur donnée
      *
      * @param string $columnName Le nom de la colonne à comparer
      * @param string $value La valeur recherchée dans la colonne
