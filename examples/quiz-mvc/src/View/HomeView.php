@@ -2,20 +2,22 @@
 
 namespace App\View;
 
+use Cda0521Framework\Html\AbstractView;
+
 /**
  * Vue permettant d'afficher la page d'accueil
  */
-class HomeView
+class HomeView extends AbstractView
 {
     /**
-     * Envoie une réponse HTTP au client
+     * Génére le corps de la page HTML
      *
+     * @see AbstractView::renderBody()
      * @return void
      */
-    public function send(): void
+    protected function renderBody(): void
     {
-        include './templates/header.php';
+        // Affiche le contenu de la balise body
         include './templates/home.php';
-        include './templates/footer.php';
     }
 }

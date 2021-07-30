@@ -8,7 +8,7 @@ use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
- * Classe regroupant le code commun à tous les modèles
+ * Classe servant de base à toutes les classe de modéles
  */
 abstract class AbstractModel
 {

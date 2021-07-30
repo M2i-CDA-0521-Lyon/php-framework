@@ -3,11 +3,12 @@
 namespace App\View;
 
 use App\Model\Question;
+use Cda0521Framework\Html\AbstractView;
 
 /**
  * Vue permettant d'afficher la page "jouer au quiz"
  */
-class PlayView
+class PlayView extends AbstractView
 {
     /**
      * La question à afficher dans la vue
@@ -32,18 +33,17 @@ class PlayView
     }
 
     /**
-     * Envoie une réponse HTTP au client
+     * Génére le corps de la page HTML
      *
+     * @see AbstractView::renderBody()
      * @return void
      */
-    public function send(): void
+    protected function renderBody(): void
     {
         // Met l'objet Question associé à cette vue dans la portée de la fonction
         $question = $this->question;
         $rightlyAnswered = $this->rightlyAnswered;
 
-        include './templates/header.php';
         include './templates/play.php';
-        include './templates/footer.php';
     }
 }
