@@ -10,6 +10,7 @@ use AltoRouter;
 use App\Controller\HomeController;
 use App\Controller\PlayController;
 use App\Controller\ProcessAnswerController;
+use Cda0521Framework\Interfaces\ControllerInterface;
 
 // Instancie le routeur
 $router = new AltoRouter();
@@ -49,6 +50,11 @@ if ($match === false) {
 
 // Comme la cible de route contient un nom de classe de contrôleur, instancie le contrôleur et exécute sa méthode invoke()
 $className = $match['target'];
+// Vérifie que la classe de contrôleur implémente bien l'interface ControllerInterface
+// sinon, il n'y a aucun garantie que le contrôleur posséde bien une méthode invoke() qui renvoie bien une vue
+if (!in_array(ControllerInterface::class, class_implements($className))) {
+  throw new Exception('Controller class ' . $className . ' does not implement ControllerInterface.');
+}
 $controller = new $className();
 $response = $controller->invoke();
 // Demande à la vue générée par le contrôleur de construire la page
