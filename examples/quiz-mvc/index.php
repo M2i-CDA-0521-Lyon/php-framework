@@ -59,7 +59,6 @@ $router->map(
 
 // Cherche une correspondance entre les routes connues et la requête du client
 $match = $router->match();
-dd($match);
 // Si aucune correspondance n'a été trouvée, affiche la page 404
 if ($match === false) {
   // Renvoie le code d'erreur "non trouvé" avec la réponse HTTP
