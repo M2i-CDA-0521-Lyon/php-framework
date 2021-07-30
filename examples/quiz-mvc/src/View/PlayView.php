@@ -28,6 +28,8 @@ class PlayView extends AbstractView
      */
     public function __construct(Question $question, ?bool $rightlyAnswered = null)
     {
+        parent::__construct('Jouer - Question ' . $question->getRank());
+
         $this->question = $question;
         $this->rightlyAnswered = $rightlyAnswered;
     }

@@ -20,6 +20,7 @@ $router->map(
   'GET',
   '/',
   function() {
+    // Code à déplacer dans HomeController
     return new HomeView();
   },
   'home'
@@ -29,6 +30,8 @@ $router->map(
   'GET',
   '/play',
   function() {
+    // Code à déplacer dans PlayController
+
     // Récupère la question actuelle en base de données
     $question = Question::findById(1);
 
@@ -41,6 +44,8 @@ $router->map(
   'POST',
   '/play',
   function() {
+    // Code à déplacer dans ProcessAnswerController
+
     // Vérifie que tous les champs nécessaires sont bien présents
     if (isset($_POST['answer']) && isset($_POST['current-question'])) {
       // Récupère la question précédente en base de données avec sa bonne réponse

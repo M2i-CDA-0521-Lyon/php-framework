@@ -9,6 +9,11 @@ use Cda0521Framework\Html\AbstractView;
  */
 class HomeView extends AbstractView
 {
+    public function __construct()
+    {
+        parent::__construct('Bienvenue!');
+    }
+
     /**
      * Génére le corps de la page HTML
      *
