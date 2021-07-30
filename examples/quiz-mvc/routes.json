@@ -1,0 +1,20 @@
+[
+    {
+        "method": "GET",
+        "uri": "/",
+        "controller": "HomeController",
+        "name": "home"
+    },
+    {
+        "method": "GET",
+        "uri": "/play",
+        "controller": "PlayController",
+        "name": "play"
+    },
+    {
+        "method": "POST",
+        "uri": "/play",
+        "controller": "ProcessAnswerController",
+        "name": "process_answer"
+    }
+]
