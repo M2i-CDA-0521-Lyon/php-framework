@@ -7,9 +7,9 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use AltoRouter;
-use App\View\HomeView;
-use App\View\PlayView;
-use App\Model\Question;
+use App\Controller\HomeController;
+use App\Controller\PlayController;
+use App\Controller\ProcessAnswerController;
 
 // Instancie le routeur
 $router = new AltoRouter();
@@ -19,46 +19,21 @@ $router = new AltoRouter();
 $router->map(
   'GET',
   '/',
-  function() {
-    // Code à déplacer dans HomeController
-    return new HomeView();
-  },
+  HomeController::class,
   'home'
 );
 // Page "jouer au quiz"
 $router->map(
   'GET',
   '/play',
-  function() {
-    // Code à déplacer dans PlayController
-
-    // Récupère la question actuelle en base de données
-    $question = Question::findById(1);
-
-    return new PlayView($question);
-  },
+  PlayController::class,
   'play'
 );
 // Traitement de la réponse à la page "jouer au quiz"
 $router->map(
   'POST',
   '/play',
-  function() {
-    // Code à déplacer dans ProcessAnswerController
-
-    // Vérifie que tous les champs nécessaires sont bien présents
-    if (isset($_POST['answer']) && isset($_POST['current-question'])) {
-      // Récupère la question précédente en base de données avec sa bonne réponse
-      $previousQuestion = Question::findById($_POST['current-question']);
-      // Vérifie si la réponse fournie par l'utilisateur correspond à la bonne réponse à la question précédente
-      $rightlyAnswered = intval($_POST['answer']) === $previousQuestion->getRightAnswer()->getId();
-    }
-
-    // Récupère la question suivante en base de données
-    $question = Question::findById(1);
-
-    return new PlayView($question, $rightlyAnswered);
-  },
+  ProcessAnswerController::class,
   'process_answer'
 );
 
@@ -72,9 +47,11 @@ if ($match === false) {
   die();
 }
 
-// Comme la cible de la route contient une fonction, exécute la fonction récupérée par le routeur et récupère la vue renvoyée par cette fonction
-$response = call_user_func_array( $match['target'], $match['params'] );
-// Demande à la vue de construire la page
+// Comme la cible de route contient un nom de classe de contrôleur, instancie le contrôleur et exécute sa méthode invoke()
+$className = $match['target'];
+$controller = new $className();
+$response = $controller->invoke();
+// Demande à la vue générée par le contrôleur de construire la page
 $response->send();
 
 die();
