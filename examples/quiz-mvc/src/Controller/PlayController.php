@@ -5,7 +5,7 @@ namespace App\Controller;
 use Exception;
 use App\View\PlayView;
 use App\Model\Question;
-use Cda0521Framework\Html\AbstractView;
+use Cda0521Framework\Interfaces\HttpResponse;
 use Cda0521Framework\Exception\NotFoundException;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
@@ -42,9 +42,9 @@ class PlayController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         return new PlayView($this->question);
     }

@@ -2,10 +2,12 @@
 
 namespace Cda0521Framework\Html;
 
+use Cda0521Framework\Interfaces\HttpResponse;
+
 /**
  * Classe servant de base à toutes les classe de vues
  */
-abstract class AbstractView
+abstract class AbstractView implements HttpResponse
 {
     /**
      * Le titre de la page, qui s'affiche dans l'onglet du navigateur
