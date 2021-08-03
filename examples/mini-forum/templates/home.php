@@ -29,7 +29,7 @@
                     <a href="/topic/<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
 
                     <div class="action-btn-container">
-                        <a href="#" class="button">Modifier</a>
+                        <a href="/topic/edit/<?= $topic->getId() ?>" class="button">Modifier</a>
                         <a href="#" class="button delete-btn">Supprimer</a>
                     </div>
                 </li>

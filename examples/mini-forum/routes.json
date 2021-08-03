@@ -24,6 +24,18 @@
         "name": "topic"
     },
     {
+        "method": "GET",
+        "uri": "/topic/edit/[i:id]",
+        "controller": "EditTopicController",
+        "name": "edit-topic"
+    },
+    {
+        "method": "POST",
+        "uri": "/topic/edit/[i:id]",
+        "controller": "ProcessEditTopicController",
+        "name": "process-edit-topic"
+    },
+    {
         "method": "POST",
         "uri": "/new-topic",
         "controller": "NewTopicController",

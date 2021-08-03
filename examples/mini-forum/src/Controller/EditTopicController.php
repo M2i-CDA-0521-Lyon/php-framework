@@ -3,27 +3,21 @@
 namespace App\Controller;
 
 use App\Model\Topic;
-use App\Model\Message;
-use App\View\TopicView;
+use App\View\EditTopicView;
 use Cda0521Framework\Exception\NotFoundException;
 use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
 /**
- * Contrôleur permettant d'afficher la page d'accueil
+ * Contrôleur permettant de traiter l'ajout d'un nouveau sujet
  */
-class TopicController implements ControllerInterface
+class EditTopicController implements ControllerInterface
 {
     /**
      * Le sujet à passer à la vue
      * @var Topic
      */
     private Topic $topic;
-    /**
-     * Les messages du sujet à passer à la vue
-     * @var array
-     */
-    private array $messages;
 
     /**
      * Crée un nouveau contrôleur
@@ -41,9 +35,6 @@ class TopicController implements ControllerInterface
         }
 
         $this->topic = $topic;
-
-        // Récupère tous les messages du topic
-        $this->messages = Message::findWhere('topic_id', $topic->getId());
     }
 
     /**
@@ -54,6 +45,6 @@ class TopicController implements ControllerInterface
      */
     public function invoke(): AbstractView
     {
-        return new TopicView($this->topic, $this->messages);
+        return new EditTopicView($this->topic);
     }
 }

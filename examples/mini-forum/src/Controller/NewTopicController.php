@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Model\Message;
 use App\Model\Topic;
 use App\Model\User;
-use App\View\HomeView;
-use App\View\TopicView;
 use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
