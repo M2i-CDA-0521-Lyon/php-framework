@@ -18,6 +18,12 @@
         "name": "login"
     },
     {
+        "method": "GET",
+        "uri": "/topic/[i:id]",
+        "controller": "TopicController",
+        "name": "topic"
+    },
+    {
         "method": "POST",
         "uri": "/new-topic",
         "controller": "NewTopicController",

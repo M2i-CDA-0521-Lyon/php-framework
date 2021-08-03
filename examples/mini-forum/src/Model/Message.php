@@ -17,31 +17,31 @@ class Message extends AbstractModel
      * Identifiant en base de données
      * @var integer|null
      */
-    private ?int $id;
+    protected ?int $id;
     /**
      * Contenu du message
      * @var string
      */
     #[Column('content')]
-    private string $content;
+    protected string $content;
     /**
      * Date de création du message
      * @var \DateTime
      */
     #[Column('date')]
-    private \DateTime $date;
+    protected \DateTime $date;
     /**
      * Identifiant en base de données de l'auteur du message
      * @var int|null
      */
     #[Column('author_id')]
-    private ?int $authorId;
+    protected ?int $authorId;
     /**
      * Identifiant en base de données du sujet du message
      * @var int|null
      */
     #[Column('topic_id')]
-    private ?int $topicId;
+    protected ?int $topicId;
 
     /**
      * Crée un nouveauu sujet
@@ -102,6 +102,30 @@ class Message extends AbstractModel
     public function setContent(string $content)
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+        /**
+     * Get date du message
+     *
+     * @return  \DateTime
+     */ 
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set date du message
+     *
+     * @param  \DateTime  $date  Date du message
+     *
+     * @return  self
+     */ 
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
 
         return $this;
     }

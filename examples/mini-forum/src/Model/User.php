@@ -17,25 +17,25 @@ class User extends AbstractModel
      * Identifiant en base de données
      * @var integer|null
      */
-    private ?int $id;
+    protected ?int $id;
     /**
      * Nom de l'utilisateur
      * @var string
      */
     #[Column('username')]
-    private string $username;
+    protected string $username;
     /**
      * Mot de passe de l'utilisateur
      * @var string
      */
     #[Column('password')]
-    private string $password;
+    protected string $password;
     /**
      * Token de l'utilisateur
      * @var string
      */
     #[Column('token')]
-    private string $token;
+    protected string $token;
 
     /**
      * Crée un nouveauu sujet

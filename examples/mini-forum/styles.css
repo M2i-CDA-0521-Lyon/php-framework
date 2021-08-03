@@ -9,6 +9,12 @@ body {
     margin-top: 40px;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 a {
     color: var(--primary-color);
     font-weight: bold;
@@ -24,9 +30,6 @@ header {
 }
 
 header nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: space-between;
 }
@@ -40,6 +43,21 @@ header nav li {
 header nav a {
     display: inline-block;
     width: 100%;
+}
+
+h1, h2, h3, p {
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0 0 var(--small-gap);
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+p:last-child {
+    margin: 0;
 }
 
 form {
@@ -88,8 +106,6 @@ button:hover, .button:hover {
 }
 
 #topic-list {
-    list-style-type: none;
-    padding: 0;
     margin: var(--large-gap) 0 0;
 }
 
@@ -100,5 +116,19 @@ button:hover, .button:hover {
 }
 
 #topic-list li:not(#topic-list li:last-child) {
+    margin-bottom: var(--small-gap);
+}
+
+#message-list {
+    margin-bottom: var(--large-gap);
+}
+
+#message-list li {
+    border: 2px solid var(--primary-color);
+    padding: 20px;
+    background-color: rgb(240, 240, 240);
+}
+
+#message-list li:not(#message-list li:last-child) {
     margin-bottom: var(--small-gap);
 }

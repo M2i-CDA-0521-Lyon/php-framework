@@ -17,25 +17,25 @@ class Topic extends AbstractModel
      * Identifiant en base de données
      * @var integer|null
      */
-    private ?int $id;
+    protected ?int $id;
     /**
      * Titre du sujet
      * @var string
      */
     #[Column('title')]
-    private string $title;
+    protected string $title;
     /**
      * Date de création du sujet
      * @var \DateTime
      */
     #[Column('date')]
-    private \DateTime $date;
+    protected \DateTime $date;
     /**
      * Identifiant en base de données de l'auteur du sujet
      * @var int
      */
     #[Column('author_id')]
-    private ?int $authorId;
+    protected ?int $authorId;
 
     /**
      * Crée un nouveauu sujet
@@ -93,6 +93,30 @@ class Topic extends AbstractModel
     public function setTitle(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get date du sujet
+     *
+     * @return  \DateTime
+     */ 
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set date du sujet
+     *
+     * @param  \DateTime  $date  Date du sujet
+     *
+     * @return  self
+     */ 
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
 
         return $this;
     }

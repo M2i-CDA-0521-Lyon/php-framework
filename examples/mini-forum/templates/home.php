@@ -26,7 +26,7 @@
         <ul id="topic-list">
             <?php foreach($topics as $topic) { ?>
                 <li>
-                    <a href="#"><?php echo $topic->getTitle() ?></a>
+                    <a href="/topic/<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
 
                     <div class="action-btn-container">
                         <a href="#" class="button">Modifier</a>
