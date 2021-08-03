@@ -1,0 +1,26 @@
+[
+    {
+        "method": "GET",
+        "uri": "/",
+        "controller": "HomeController",
+        "name": "home"
+    },
+    {
+        "method": "GET",
+        "uri": "/sign-in",
+        "controller": "SignInController",
+        "name": "sign-in"
+    },
+    {
+        "method": "GET",
+        "uri": "/login",
+        "controller": "LoginController",
+        "name": "login"
+    },
+    {
+        "method": "POST",
+        "uri": "/new-topic",
+        "controller": "NewTopicController",
+        "name": "new-topic"
+    }
+]

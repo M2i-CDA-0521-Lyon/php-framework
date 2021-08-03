@@ -1,0 +1,104 @@
+:root {
+    --primary-color: #79A3D4;
+    --warn-color: #D48185;
+    --small-gap: 20px;
+    --large-gap: 60px;
+}
+
+body {
+    margin-top: 40px;
+}
+
+a {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+header {
+    margin-bottom: var(--large-gap);
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav li {
+    width: 100%;
+    padding-bottom: 7px;
+    text-align: center;
+}
+
+header nav a {
+    display: inline-block;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > *:not(form > *:last-child) {
+    margin-bottom: var(--small-gap);
+}
+
+input, textarea {
+    border: 2px solid var(--primary-color);
+    padding: 5px;
+}
+
+button, .button {
+    background-color: var(--primary-color);
+    color: white;
+    line-height: 40px;
+    font-weight: bold;
+    border: none;
+    padding: 0 50px;
+    display: inline-block;
+}
+
+button:hover, .button:hover {
+    color: var(--primary-color);
+    background-color: white;
+}
+
+.active {
+    border-bottom: 4px solid var(--primary-color);
+}
+
+.action-btn-container a:not(.action-btn-container a:last-child) {
+    margin-right: var(--small-gap);
+}
+
+.delete-btn {
+    background-color: var(--warn-color);
+}
+
+.delete-btn:hover {
+    color: var(--warn-color);
+}
+
+#topic-list {
+    list-style-type: none;
+    padding: 0;
+    margin: var(--large-gap) 0 0;
+}
+
+#topic-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#topic-list li:not(#topic-list li:last-child) {
+    margin-bottom: var(--small-gap);
+}

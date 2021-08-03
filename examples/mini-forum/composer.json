@@ -1,0 +1,32 @@
+{
+    "name": "m2i-cda-0521/mini-forum",
+    "description": "Mini-forum application.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Meyer",
+            "email": "celebow@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "m2i-cda-0521/framework": "dev-master"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    }
+}
