@@ -19,11 +19,6 @@ class TopicController implements ControllerInterface
      * @var Topic
      */
     private Topic $topic;
-    /**
-     * Les messages du sujet à passer à la vue
-     * @var array
-     */
-    private array $messages;
 
     /**
      * Crée un nouveau contrôleur
@@ -41,9 +36,6 @@ class TopicController implements ControllerInterface
         }
 
         $this->topic = $topic;
-
-        // Récupère tous les messages du topic
-        $this->messages = Message::findWhere('topic_id', $topic->getId());
     }
 
     /**
@@ -54,6 +46,6 @@ class TopicController implements ControllerInterface
      */
     public function invoke(): AbstractView
     {
-        return new TopicView($this->topic, $this->messages);
+        return new TopicView($this->topic);
     }
 }

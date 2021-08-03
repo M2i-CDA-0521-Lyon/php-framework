@@ -5,7 +5,6 @@ namespace App\Model;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
-use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente un sujet
@@ -147,5 +146,15 @@ class Topic extends AbstractModel
         }
 
         return $this;
+    }
+
+    /**
+     * Retourne tous les messages du sujet
+     *
+     * @return  array
+     */ 
+    public function getMessages()
+    {
+        return Message::findWhere('topic_id', $this->id);
     }
 }

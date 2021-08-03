@@ -5,7 +5,6 @@ namespace App\Model;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
-use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente un utilisateur

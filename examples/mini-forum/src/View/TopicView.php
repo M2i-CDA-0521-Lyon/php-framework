@@ -21,12 +21,11 @@ class TopicView extends AbstractView
      */
     private array $messages;
 
-    public function __construct(Topic $topic, array $messages)
+    public function __construct(Topic $topic)
     {
         parent::__construct('Mini-forum - ' . $topic->getTitle());
 
         $this->topic = $topic;
-        $this->messages = $messages;
     }
 
     /**
@@ -38,7 +37,6 @@ class TopicView extends AbstractView
     protected function renderBody(): void
     {
         $topic = $this->topic;
-        $messages = $this->messages;
 
         // Affiche le contenu de la balise body
         include './templates/topic.php';

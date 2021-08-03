@@ -5,7 +5,6 @@ namespace App\Model;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
-use Cda0521Framework\Database\Sql\SqlDatabaseHandler;
 
 /**
  * Représente un message
@@ -159,7 +158,7 @@ class Message extends AbstractModel
     }
 
     /**
-     * Get identifiant en base de données du sujet du message
+     * Retourne le sujet du message
      *
      * @return  Topic|null
      */ 
