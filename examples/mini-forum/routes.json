@@ -40,5 +40,11 @@
         "uri": "/new-topic",
         "controller": "NewTopicController",
         "name": "new-topic"
+    },
+    {
+        "method": "GET",
+        "uri": "/topic/delete/[i:id]",
+        "controller": "DeleteTopicController",
+        "name": "delete-topic"
     }
 ]

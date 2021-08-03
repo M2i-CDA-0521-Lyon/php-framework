@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
+use App\Model\Message;
 use App\Model\Topic;
-use App\View\EditTopicView;
 use Cda0521Framework\Exception\NotFoundException;
 use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
 /**
- * Contrôleur permettant d'afficher la vue de modification d'un sujet
+ * Contrôleur permettant de traiter la suppression d'un sujet
  */
-class EditTopicController implements ControllerInterface
+class DeleteTopicController implements ControllerInterface
 {
     /**
-     * Le sujet à passer à la vue
+     * Le sujet à supprimer
      * @var Topic
      */
     private Topic $topic;
@@ -45,6 +45,17 @@ class EditTopicController implements ControllerInterface
      */
     public function invoke(): AbstractView
     {
-        return new EditTopicView($this->topic);
+        // Supprime les messages du sujet
+        $messages = Message::findWhere('topic_id', $this->topic->getId());
+
+        foreach($messages as $message) {
+            $message->delete();
+        }
+
+        // Supprime le sujet
+        $this->topic->delete();
+
+        // Redirige vers la page d'accueil
+        header('Location: /');
     }
 }

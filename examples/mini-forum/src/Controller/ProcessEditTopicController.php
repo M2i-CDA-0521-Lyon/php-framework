@@ -8,7 +8,7 @@ use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
 /**
- * Contrôleur permettant de traiter l'ajout d'un nouveau sujet
+ * Contrôleur permettant de traiter la modification d'un sujet
  */
 class ProcessEditTopicController implements ControllerInterface
 {

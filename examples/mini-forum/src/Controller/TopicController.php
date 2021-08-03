@@ -10,7 +10,7 @@ use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
 /**
- * Contrôleur permettant d'afficher la page d'accueil
+ * Contrôleur permettant d'afficher l'affichage d'un sujet et de ses messages
  */
 class TopicController implements ControllerInterface
 {

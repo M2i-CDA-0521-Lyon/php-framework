@@ -30,7 +30,7 @@
 
                     <div class="action-btn-container">
                         <a href="/topic/edit/<?= $topic->getId() ?>" class="button">Modifier</a>
-                        <a href="#" class="button delete-btn">Supprimer</a>
+                        <a href="/topic/delete/<?= $topic->getId() ?>" class="button delete-btn">Supprimer</a>
                     </div>
                 </li>
             <?php } ?>
