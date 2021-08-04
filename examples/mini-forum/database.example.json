@@ -1,0 +1,6 @@
+{
+    "host": "localhost",
+    "dbname": "mini-forum",
+    "username": "root",
+    "password": "root"
+}

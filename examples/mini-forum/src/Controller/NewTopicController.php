@@ -48,8 +48,8 @@ class NewTopicController implements ControllerInterface
                 $message = new Message(null, $_POST['message-content'], date('Y-m-d H:i:s'), $author->getId(), $topic->getId());
                 $message->save();
 
-                // Redirige vers la route correspondant au topic
-                return new RedirectResponse('/topic/' . $topic->getId());
+                // Redirige vers la page d'accueil
+                return new RedirectResponse('/');
                 
             }
         } else {

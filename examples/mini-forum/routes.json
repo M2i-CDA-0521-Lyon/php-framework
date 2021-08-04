@@ -19,12 +19,6 @@
     },
     {
         "method": "GET",
-        "uri": "/topic/[i:id]",
-        "controller": "TopicController",
-        "name": "topic"
-    },
-    {
-        "method": "GET",
         "uri": "/topic/edit/[i:id]",
         "controller": "EditTopicController",
         "name": "edit-topic"
@@ -46,11 +40,5 @@
         "uri": "/topic/delete/[i:id]",
         "controller": "DeleteTopicController",
         "name": "delete-topic"
-    },
-    {
-        "method": "POST",
-        "uri": "/new-message/[i:topicId]",
-        "controller": "NewMessageController",
-        "name": "new-message"
     }
 ]
