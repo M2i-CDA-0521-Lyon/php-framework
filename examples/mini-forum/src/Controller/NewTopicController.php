@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Model\Message;
 use App\Model\Topic;
 use App\Model\User;
-use Cda0521Framework\Html\AbstractView;
+use Cda0521Framework\Http\RedirectResponse;
 use Cda0521Framework\Interfaces\ControllerInterface;
+use Cda0521Framework\Interfaces\HttpResponse;
 
 /**
  * Contrôleur permettant de traiter l'ajout d'un nouveau sujet
@@ -17,9 +18,9 @@ class NewTopicController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         $errors = [];
 
@@ -48,7 +49,8 @@ class NewTopicController implements ControllerInterface
                 $message->save();
 
                 // Redirige vers la route correspondant au topic
-                header('Location: /topic/' . $topic->getId());
+                return new RedirectResponse('/topic/' . $topic->getId());
+                
             }
         } else {
             $errors[] = 'Vous devez remplir tous les champs';
@@ -56,7 +58,7 @@ class NewTopicController implements ControllerInterface
 
         if (!empty($errors)) {
             // En cas d'erreur, redirige vers la page d'accueil
-            header('Location: /');
+            return new RedirectResponse('/');
         }
     }
 }

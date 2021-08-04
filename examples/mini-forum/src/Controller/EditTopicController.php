@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Model\Topic;
 use App\View\EditTopicView;
 use Cda0521Framework\Exception\NotFoundException;
-use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
+use Cda0521Framework\Interfaces\HttpResponse;
 
 /**
  * Contrôleur permettant d'afficher la vue de modification d'un sujet
@@ -41,9 +41,9 @@ class EditTopicController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         return new EditTopicView($this->topic);
     }

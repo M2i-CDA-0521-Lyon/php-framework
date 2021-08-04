@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Model\Message;
 use App\Model\Topic;
 use Cda0521Framework\Exception\NotFoundException;
-use Cda0521Framework\Html\AbstractView;
+use Cda0521Framework\Http\RedirectResponse;
 use Cda0521Framework\Interfaces\ControllerInterface;
+use Cda0521Framework\Interfaces\HttpResponse;
 
 /**
  * Contrôleur permettant de traiter la suppression d'un sujet
@@ -41,9 +42,9 @@ class DeleteTopicController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         // Supprime les messages du sujet
         $messages = Message::findWhere('topic_id', $this->topic->getId());
@@ -56,6 +57,6 @@ class DeleteTopicController implements ControllerInterface
         $this->topic->delete();
 
         // Redirige vers la page d'accueil
-        header('Location: /');
+        return new RedirectResponse('/');
     }
 }

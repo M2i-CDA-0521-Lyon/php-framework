@@ -6,8 +6,8 @@ use App\Model\Topic;
 use App\Model\Message;
 use App\View\TopicView;
 use Cda0521Framework\Exception\NotFoundException;
-use Cda0521Framework\Html\AbstractView;
 use Cda0521Framework\Interfaces\ControllerInterface;
+use Cda0521Framework\Interfaces\HttpResponse;
 
 /**
  * Contrôleur permettant d'afficher l'affichage d'un sujet et de ses messages
@@ -42,9 +42,9 @@ class TopicController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         return new TopicView($this->topic);
     }
