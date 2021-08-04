@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\View\PlayView;
 use App\Model\Question;
-use Cda0521Framework\Html\AbstractView;
+use Cda0521Framework\Http\RedirectResponse;
+use Cda0521Framework\Interfaces\HttpResponse;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
 /**
@@ -40,9 +41,9 @@ class ProcessAnswerController implements ControllerInterface
      * Examine la requête HTTP et prépare une réponse HTTP adaptée
      *
      * @see ControllerInterface::invoke()
-     * @return AbstractView
+     * @return HttpResponse
      */
-    public function invoke(): AbstractView
+    public function invoke(): HttpResponse
     {
         // Vérifie que tous les champs nécessaires sont bien présents
         if (isset($_POST['answer'])) {
@@ -54,6 +55,6 @@ class ProcessAnswerController implements ControllerInterface
         $nextQuestion = Question::findWhere('rank', $this->question->getRank() + 1)[0];
 
         // Redirige vers la page présentant la question suivante
-        header('Location: /play/' . $nextQuestion->getId());
+        return new RedirectResponse('/play/' . $nextQuestion->getId());
     }
 }
