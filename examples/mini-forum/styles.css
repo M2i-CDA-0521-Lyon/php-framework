@@ -118,3 +118,17 @@ button:hover, .button:hover {
 #topic-list li:not(#topic-list li:last-child) {
     margin-bottom: var(--small-gap);
 }
+
+#message-list {
+    margin-bottom: var(--large-gap);
+}
+
+#message-list li {
+    border: 2px solid var(--primary-color);
+    padding: 20px;
+    background-color: rgb(240, 240, 240);
+}
+
+#message-list li:not(#message-list li:last-child) {
+    margin-bottom: var(--small-gap);
+}

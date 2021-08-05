@@ -40,5 +40,17 @@
         "uri": "/topic/delete/[i:id]",
         "controller": "DeleteTopicController",
         "name": "delete-topic"
+    },
+    {
+        "method": "GET",
+        "uri": "/topic/[i:id]",
+        "controller": "TopicController",
+        "name": "topic"
+    },
+    {
+        "method": "POST",
+        "uri": "/message/[i:topicId]",
+        "controller": "NewMessageController",
+        "name": "new-message"
     }
 ]
