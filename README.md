@@ -148,7 +148,9 @@ Les routes permettent d'offrir des points d'entrée dans l'application. Une rout
 - Un nom de contrôleur (voir section suivante).
 - Un nom de route (utile pour débugger l'application).
 
-Chaque route **doit** être écrite au format JSON dans un fichier appelé **routes.json**. #### Exemple
+Chaque route **doit** être écrite au format JSON dans un fichier appelé **routes.json**.
+
+#### Exemple
 
 ```json
 [

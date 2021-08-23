@@ -1,2 +1,8 @@
 [
+    {
+        "uri": "/",
+        "method": "GET",
+        "controller": "TodoListController",
+        "name": "todo-list"
+    }
 ]

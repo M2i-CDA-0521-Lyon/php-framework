@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Todo;
 use Cda0521Framework\Application;
 
 // Active le chargement automatique des classes dans le projet

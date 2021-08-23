@@ -37,6 +37,7 @@ abstract class AbstractView implements HttpResponse
 
         echo '<head>' . PHP_EOL;
         echo '<title>' . $this->pageTitle . '</title>' . PHP_EOL;
+        // TODO: Remplacer le chargement du head par une méthode renderHead qui permet à chaque vue de définir librement son contenu
         include './templates/head.php';
         echo '</head>' . PHP_EOL;
         
