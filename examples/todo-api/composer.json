@@ -1,0 +1,32 @@
+{
+    "name": "m2i-cda-0521/todo-api",
+    "description": "Hybrid to-do application.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Romain Tello",
+            "email": "romain.tello@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "m2i-cda-0521/framework": "dev-master"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    }
+}

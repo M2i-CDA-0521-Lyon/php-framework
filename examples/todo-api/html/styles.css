@@ -1,0 +1,14 @@
+.todo.done {
+    text-decoration: line-through;
+    color: darkgrey;
+}
+
+.order-first {
+    order: -1;
+}
+
+.todo-name {
+    font-size: 1rem;
+    margin: initial;
+    font-weight: normal;
+}
