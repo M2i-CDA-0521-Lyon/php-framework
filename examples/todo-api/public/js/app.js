@@ -32,12 +32,21 @@ const app = {
         event.preventDefault();
         // Récupère le contenu du champ texte
         const todoName = app.todoNameInput.val();
+        // Crée une nouvelle tâche à envoyer au serveur
+        const newTodo = { text: todoName };
+        // Envoie une requête dans l'API permettant d'ajouter une nouvelle tâche en base de données
+        fetch('/api/todos', {
+          method: 'POST',
+          body: JSON.stringify(newTodo),
+        })
+        .then(response => response.json())
+        // Si la requête a répondu avec succès, ajoute un nouvel élément dans la liste des tâches à faire
+        .then(data => app.addTodo(data.id, data.text, data.done));
+
         // Efface le contenu du champ texte
         app.todoNameInput.val('');
         // Désactive le bouton
         app.addTodoButton.attr('disabled', true);
-        // Ajoute une nouvelle tâche
-        app.addTodo(todoName);
       }
     );
     // Associe une action au fait que la valeur du champ texte soit modifiée
@@ -56,14 +65,19 @@ const app = {
       }
     );
 
-    // Ajoute des tâches par défaut
-    app.addTodo('Acheter des bananes');
-    app.addTodo('Ranger ma chambre');
-    app.addTodo('Relire mes cours de JavaScript');
+    // Récupère la liste des tâches dans l'API
+    fetch('/api/todos')
+    .then(response => response.json())
+    .then(data => {
+      // Pour chaque tâche présente dans la réponse, crée un élément de liste dans la page
+      for (todo of data) {
+        app.addTodo(todo.id, todo.text, todo.done);
+      }
+    });
   },
 
   // Ajoute une nouvelle tâche à faire dans la liste
-  addTodo: function(todoName) {
+  addTodo: function(id, todoName, done = false) {
     // Crée un nouvel élément de liste
     const newTodo = $('<li class="todo list-group-item d-flex align-items-center justify-content-between"><h5 class="todo-name"></h5><input type="checkbox" class="todo-toggle order-first" /><form class="todo-edit-name d-none"><input type="text" class="todo-edit-name-input" /><button class="btn btn-outline-success btn-sm"><i class="fas fa-check"></i></button></form><div class="todo-buttons"><button class="todo-buttons-edit btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i></button><button class="todo-buttons-delete btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button></div></li>');
     // Ajoute cet élément de liste dans la liste
@@ -77,17 +91,29 @@ const app = {
     checkbox.on(
       'change',
       function(event) {
-        // Si la checkbox vient d'être cochée
-        if (event.target.checked) {
-          // Rajouter une classe "done" afin de faire apparaître
-          // la tâche comme terminée
-          newTodo.addClass('done');
-          // Sinon
-        } else {
-          // Enlever la classe "done" afin de faire apparaître
-          // la tâche comme non terminée
-          newTodo.removeClass('done');
-        }
+
+        const payload = {
+          done: event.target.checked
+        };
+
+        fetch('/api/todos/' + id, {
+          method: 'PATCH',
+          body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Si la checkbox vient d'être cochée
+          if (data.done) {
+            // Rajouter une classe "done" afin de faire apparaître
+            // la tâche comme terminée
+            newTodo.addClass('done');
+            // Sinon
+          } else {
+            // Enlever la classe "done" afin de faire apparaître
+            // la tâche comme non terminée
+            newTodo.removeClass('done');
+          }
+        })
       }
     );
 
@@ -104,12 +130,24 @@ const app = {
         event.preventDefault();
         // Récupère la valeur du champ texte
         const newName = nameEdit.find('.todo-edit-name-input').val();
-        // Remplace le texte du nouvel élément de liste par ce texte
-        todoNameElement.text(newName);
-        // Masque le formulaire
-        nameEdit.addClass('d-none');
-        // Affiche l'élément de texte
-        todoNameElement.removeClass('d-none');
+
+        const payload = {
+          text: newName
+        };
+
+        fetch('/api/todos/' + id, {
+          method: 'PATCH',
+          body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Remplace le texte du nouvel élément de liste par ce texte
+          todoNameElement.text(data.text);
+          // Masque le formulaire
+          nameEdit.addClass('d-none');
+          // Affiche l'élément de texte
+          todoNameElement.removeClass('d-none');
+        });
       }
     );
 
@@ -135,8 +173,16 @@ const app = {
     deleteButton.on(
       'click',
       function() {
-        // Supprime l'élément de la liste
-        newTodo.remove();
+        // Envoie une requête dans l'API permettant de supprimer la tâche correspondante de la base de données
+        fetch('/api/todos/' + id, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          // Si la requête a répondu avec succès, supprime l'élément de la liste
+          if (response.ok) {
+            newTodo.remove();
+          }
+        });
       }
     );
   },
