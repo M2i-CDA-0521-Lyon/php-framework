@@ -151,6 +151,10 @@ abstract class AbstractModel
                     if ($value instanceof \DateTime) {
                         $value = $value->format('Y-m-d H:i:s');
                     }
+                    // Si la propriété représente un booléen, convertit le booléan en nombre
+                    if (is_bool($value)) {
+                        $value = (int)$value;
+                    }
                     // Ajoute une entrée associant le nom de la colonne à la valeur de la propriété dans l'objet
                     $result [$columnName] = $value;
                 }

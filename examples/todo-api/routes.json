@@ -4,5 +4,41 @@
         "method": "GET",
         "controller": "TodoListController",
         "name": "todo-list"
+    },
+    {
+        "uri": "/api/todos",
+        "method": "GET",
+        "controller": "Api\\Todo\\GetAllController",
+        "name": "get-todos"
+    },
+    {
+        "uri": "/api/todos/[i:id]",
+        "method": "GET",
+        "controller": "Api\\Todo\\GetByIdController",
+        "name": "get-todo-by-id"
+    },
+    {
+        "uri": "/api/todos",
+        "method": "POST",
+        "controller": "Api\\Todo\\CreateController",
+        "name": "create-todo"
+    },
+    {
+        "uri": "/api/todos/[i:id]",
+        "method": "DELETE",
+        "controller": "Api\\Todo\\DeleteController",
+        "name": "delete-todo"
+    },
+    {
+        "uri": "/api/todos/[i:id]",
+        "method": "PUT",
+        "controller": "Api\\Todo\\ReplaceController",
+        "name": "replace-todo"
+    },
+    {
+        "uri": "/api/todos/[i:id]",
+        "method": "PATCH",
+        "controller": "Api\\Todo\\UpdateController",
+        "name": "update-todo"
     }
 ]

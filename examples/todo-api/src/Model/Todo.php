@@ -2,12 +2,13 @@
 
 namespace App\Model;
 
+use JsonSerializable;
 use Cda0521Framework\Database\Sql\Table;
 use Cda0521Framework\Database\Sql\Column;
 use Cda0521Framework\Database\AbstractModel;
 
 #[Table('todo')]
-class Todo extends AbstractModel
+class Todo extends AbstractModel implements JsonSerializable
 {
     protected ?int $id;
     #[Column('text')]
@@ -20,6 +21,15 @@ class Todo extends AbstractModel
         $this->id = $id;
         $this->text = $text;
         $this->done = $done;
+    }
+
+    public function jsonSerialize ()
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'done' => $this->done
+        ];
     }
 
     /**
@@ -43,7 +53,7 @@ class Todo extends AbstractModel
      *
      * @return  self
      */ 
-    public function setText($text)
+    public function setText(string $text)
     {
         $this->text = $text;
 
@@ -63,7 +73,7 @@ class Todo extends AbstractModel
      *
      * @return  self
      */ 
-    public function setDone($done)
+    public function setDone(bool $done)
     {
         $this->done = $done;
 
