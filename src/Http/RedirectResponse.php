@@ -26,6 +26,17 @@ final class RedirectResponse implements HttpResponse
     }
 
     /**
+     * Récupère le code HTTP de la réponse
+     *
+     * @return integer
+     */
+    public function getStatusCode(): int
+    {
+        // Toutes les redirections renvoient un code HTTP 303: See Other (la réponse à cette requête se trouve ailleurs)
+        return 303;
+    }
+
+    /**
      * Envoie la réponse HTTP au client
      * 
      * @see HttpResponse::send()

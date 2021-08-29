@@ -38,10 +38,9 @@ class UpdateController implements ControllerInterface
     {
         // Si la tâche n'existe pas
         if (is_null($this->todo))  {
-            // Associe un code "non trouvé" à la réponse HTTP
-            http_response_code(404);
             // Génère une réponse qui contient un message d'erreur au format JSON
-            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ]);
+            // Associe un code "non trouvé" à la réponse HTTP
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ], 404);
         }
         
         // Récupère le contenu au format JSON de la requête HTTP et le convertit en tableau associatif
@@ -49,10 +48,9 @@ class UpdateController implements ControllerInterface
 
         // Si le contenu de l'objet reçu est incomplet ou vide
         if (isset($payload['text']) && empty($payload['text'])) {
-            // Associe un code "requête invalide" à la réponse HTTP
-            http_response_code(400);
             // Sinon, génère une réponse qui contient un message d'erreur au format JSON
-            return new JsonResponse([ "message" => "Le texte de la tâche à ajouter est manquant ou vide." ]);
+            // Associe un code "requête invalide" à la réponse HTTP
+            return new JsonResponse([ "message" => "Le texte de la tâche à ajouter est manquant ou vide." ], 400);
         }
         
         // Met à jour les propriétés de l'objet existant à partir des données envoyées par le client

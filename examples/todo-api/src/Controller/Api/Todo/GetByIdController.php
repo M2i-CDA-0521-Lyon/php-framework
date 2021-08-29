@@ -38,10 +38,9 @@ class GetByIdController implements ControllerInterface
     {
         // Si la tâche n'existe pas
         if (is_null($this->todo))  {
-            // Associe un code "non trouvé" à la réponse HTTP
-            http_response_code(404);
             // Génère une réponse qui contient un message d'erreur au format JSON
-            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ]);
+            // Associe un code "non trouvé" à la réponse HTTP
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ], 404);
         }
         
         // Sinon, génère une réponse qui contient les données au format JSON

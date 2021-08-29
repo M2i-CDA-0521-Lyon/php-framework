@@ -26,6 +26,18 @@ abstract class AbstractView implements HttpResponse
     }
 
     /**
+     * Récupère le code HTTP de la réponse
+     *
+     * @return integer
+     */
+    public function getStatusCode(): int
+    {
+        // Par défaut, toutes les vues renvoient un code HTTP 200: OK
+        // Les vues concrètes peuvent modifier ce comportement en réimplémentant cette méthode
+        return 200;
+    }
+
+    /**
      * Envoie une réponse HTTP au client
      *
      * @return void

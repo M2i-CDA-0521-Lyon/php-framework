@@ -15,15 +15,33 @@ class JsonResponse implements HttpResponse
      * @var mixed
      */
     protected $data;
+    /**
+     * Le code HTTP de la réponse
+     *
+     * @var integer
+     */
+    protected int $statusCode;
 
     /**
      * Crée une nouvelle réponse en JSON
      *
      * @param mixed $data La donnée à sérialiser
+     * @param int $statusCode Le code HTTP de la réponse (par défaut: 200)
      */
-    public function __construct($data)
+    public function __construct($data, int $statusCode = 200)
     {
         $this->data = $data;
+        $this->statusCode = $statusCode;
+    }
+
+    /**
+     * Récupère le code HTTP de la réponse
+     *
+     * @return integer
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
     }
 
     /**

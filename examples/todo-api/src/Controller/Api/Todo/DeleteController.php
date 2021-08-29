@@ -38,17 +38,15 @@ class DeleteController implements ControllerInterface
     {
         // Si la tâche n'existe pas
         if (is_null($this->todo))  {
-            // Associe un code "non trouvé" à la réponse HTTP
-            http_response_code(404);
             // Génère une réponse qui contient un message d'erreur au format JSON
-            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ]);
+            // Associe un code "non trouvé" à la réponse HTTP
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ], 404);
         }
         
         // Efface l'enregistrement correspondant à l'objet dans la base de données
         $this->todo->delete();
-        // Associe un code "pas de contenu" à la réponse HTTP
-        http_response_code(204);
         // Génère une réponse vide au format JSON
-        return new JsonResponse('');
+        // Associe un code "pas de contenu" à la réponse HTTP
+        return new JsonResponse('', 204);
     }
 }

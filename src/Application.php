@@ -52,6 +52,7 @@ class Application
             $controller = new $className(...$params);
             $response = $controller->invoke();
             // Demande à la vue générée par le contrôleur de construire la page
+            \http_response_code($response->getStatusCode());
             $response->send();
         }
         catch (NotFoundException $exception) {

@@ -25,19 +25,17 @@ class CreateController implements ControllerInterface
         
         // Si le contenu de l'objet reçu est incomplet ou vide
         if (!isset($payload['text']) || empty($payload['text'])) {
-            // Associe un code "requête invalide" à la réponse HTTP
-            http_response_code(400);
             // Sinon, génère une réponse qui contient un message d'erreur au format JSON
-            return new JsonResponse([ "message" => "Le texte de la tâche à ajouter est manquant ou vide." ]);
+            // Associe un code "requête invalide" à la réponse HTTP
+            return new JsonResponse([ "message" => "Le texte de la tâche à ajouter est manquant ou vide." ], 400);
         }
 
         // Sinon, crée un nouvel objet à partir des données envoyées par le client
         $todo = new Todo(null, $payload['text']);
         // Sauvegarde un enregistrement correspondant à l'état de l'objet en base de données
         $todo->save();
-        // Associe un code "Créé" à la réponse HTTP
-        http_response_code(201);
         // Génère une réponse qui contient les données au format JSON
-        return new JsonResponse($todo);
+        // Associe un code "Créé" à la réponse HTTP
+        return new JsonResponse($todo, 201);
     }
 }
