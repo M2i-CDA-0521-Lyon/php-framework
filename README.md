@@ -311,3 +311,82 @@ class HelloPersonController implements ControllerInterface
     }
 }
 ```
+
+### Générer des redirections
+
+Parfois, un contrôleur n'a vocation à produire que des opérations (par exemple, des opérations en base de données), et pas un affiche. Dans ce cas, on pourra chercher à réaliser une redirection vers une autre route (et donc, un autre contrôleur). Le *framework* propose un moyen de générer ce type de réponse: il suffit de faire en sorte qu'un contrôleur renvoie une instance de la classe **RedirectResponse** au lieu d'une classe dérivée de **AbstractView**.
+
+Ceci aura pour effet de relancer l'application au départ, comme si le client venait de demander l'URL passée en paramètre du constructeur de **RedirectResponse**.
+
+#### Exemple
+
+Dans cet exemple, on dispose de deux routes: l'une qui permet d'afficher un formulaire, et l'autre qui permet de traiter ce formulaire une fois que l'utilisateur l'a validé.
+
+```json
+// routes.json
+[
+    {
+        "uri": "/form",
+        "method": "GET",
+        "controller": "DisplayFormController",
+        "name": "display_form"
+    },
+    {
+        "uri": "/form",
+        "method": "POST",
+        "controller": "ProcessFormController",
+        "name": "display_form"
+    }
+]
+```
+
+Lorsque le formulaire est validé, le contrôleur **ProcessFormController** est appelé. Si le contenu du formulaire est valide, il crée une instance d'un modéle et lui demande de sauvegarder un enregistrement correspondant en base de données. Dans tous les cas, il n'a aucun affichage particulier à produire, hormis de renvoyer une nouvelle copie du formulaire. Au lieu de répéter le code du contrôleur **DisplayFormController** qui permet d'afficher ce formulaire, on peut demander à **ProcessFormController** de générer une redirection.
+
+```php
+// src/Controller/ProcessFormController.php
+class ProcessFormController implements ControllerInterface
+{
+    public function invoke(): AbstractView
+    {
+        if (isset($_POST['text'])) {
+            $todo = new Todo($_POST['text']);
+            $todo->save();
+        }
+
+        return new RedirectResponse('/form');
+    }
+}
+```
+
+Ainsi, l'application redémarrera et appellera **DisplayFormController** à la place.
+
+### Générer des réponses au format JSON
+
+Dans le cas d'une application web traditionnelle, les vues génèrent du code HTML. Mais lorsque l'on souhaite coder une API, par exemple, il est possible qu'on cherche à obtenir des réponses HTTP encodées au format JSON à la place. Le *framework* propose un moyen de générer ce type de réponse: il suffit de faire en sorte qu'un contrôleur renvoie une instance de la classe **JsonResponse** au lieu d'une classe dérivée de **AbstractView**.
+
+Ceci aura pour effet de renvoyer une réponse HTTP contenant la donnée passée en paramètre du constructeur de **JsonResponse**, sérialisée au format JSON.
+
+#### Exemple
+
+Dans cet exemple, un cherche à renvoyer un enregistrement en base de données au format JSON. Le contrôleur commence par aller chercher l'enregistrement demandé, et s'il n'a rien récupéré, renvoie une réponse contenant un message d'erreur à la place.
+
+```php
+class GetByIdController implements ControllerInterface
+{
+    private ?Todo $todo;
+
+    public function __construct(int $id)
+    {
+        $this->todo = Todo::findById($id);
+    }
+
+    public function invoke(): HttpResponse
+    {
+        if (is_null($this->todo))  {
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ], 404);
+        }
+        
+        return new JsonResponse($this->todo);
+    }
+}
+```
