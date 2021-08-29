@@ -4,6 +4,7 @@ namespace Cda0521Framework;
 
 use Exception;
 use AltoRouter;
+use Cda0521Framework\Html\NotFoundView;
 use Cda0521Framework\Exception\NotFoundException;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
@@ -49,17 +50,17 @@ class Application
                 throw new Exception('Controller class ' . $className . ' does not implement ControllerInterface.');
             }
             $params = $match['params'];
+            // Crée une instance du contrôleur obtenu et lui demande de générer une réponse
             $controller = new $className(...$params);
             $response = $controller->invoke();
-            // Demande à la vue générée par le contrôleur de construire la page
-            \http_response_code($response->getStatusCode());
-            $response->send();
         }
+        // Si une erreur de type "non trouvé" a arrêté prématurément le processus
         catch (NotFoundException $exception) {
-            // Renvoie le code d'erreur "non trouvé" avec la réponse HTTP
-            http_response_code(404);
-            echo 'Page non trouvée!';
-            die();
+            // Génére une réponse contenat une page "non trouvé" à la place
+            $response = new NotFoundView();
         }
+        // Demande à la réponse générée par le contrôleur de construire la page
+        \http_response_code($response->getStatusCode());
+        $response->send();
     }
 }
