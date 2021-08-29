@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Todo;
 
 use App\Model\Todo;
+use Cda0521Framework\Http\JsonResponse;
 use Cda0521Framework\Interfaces\HttpResponse;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
@@ -28,18 +29,19 @@ class UpdateController implements ControllerInterface
         $this->todo = Todo::findById($id);
     }
 
+    /**
+     * Examine la requête HTTP et prépare une réponse HTTP adaptée
+     *
+     * @return HttpResponse
+     */
     public function invoke(): HttpResponse
     {
-        // Ajoute une méta-donnée signifiant que la réponse est encodée en JSON
-        header("Content-Type: application/json; charset=UTF-8");
-
-        // Vérifie si la tâche existe
+        // Si la tâche n'existe pas
         if (is_null($this->todo))  {
             // Associe un code "non trouvé" à la réponse HTTP
             http_response_code(404);
-            // Sérialise un message d'errur et l'écrit dans la réponse
-            echo json_encode(["message"=>"L'id de la tâche n'existe pas."]);
-            die();
+            // Génère une réponse qui contient un message d'erreur au format JSON
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ]);
         }
         
         // Récupère le contenu au format JSON de la requête HTTP et le convertit en tableau associatif
@@ -49,9 +51,8 @@ class UpdateController implements ControllerInterface
         if (isset($payload['text']) && empty($payload['text'])) {
             // Associe un code "requête invalide" à la réponse HTTP
             http_response_code(400);
-            // Sérialise un message d'errur et l'écrit dans la réponse
-            echo json_encode(["message"=>"Le texte de la tâche est vide"]);
-            die();
+            // Sinon, génère une réponse qui contient un message d'erreur au format JSON
+            return new JsonResponse([ "message" => "Le texte de la tâche à ajouter est manquant ou vide." ]);
         }
         
         // Met à jour les propriétés de l'objet existant à partir des données envoyées par le client
@@ -63,8 +64,7 @@ class UpdateController implements ControllerInterface
         }
         // Sauvegarde un enregistrement correspondant à l'état de l'objet en base de données
         $this->todo->save();
-        // Sérialise l'objet en JSON et l'écrit dans la réponse
-        echo json_encode($this->todo);
-        die();
+        // Génère une réponse qui contient les données au format JSON
+        return new JsonResponse($this->todo);
     }
 }

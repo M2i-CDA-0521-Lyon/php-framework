@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Todo;
 
 use App\Model\Todo;
+use Cda0521Framework\Http\JsonResponse;
 use Cda0521Framework\Interfaces\HttpResponse;
 use Cda0521Framework\Interfaces\ControllerInterface;
 
@@ -35,20 +36,15 @@ class GetByIdController implements ControllerInterface
      */
     public function invoke(): HttpResponse
     {
-        // Ajoute une méta-donnée signifiant que la réponse est encodée en JSON
-        header("Content-Type: application/json; charset=UTF-8");
-
-        // Vérifie si la tâche existe
-        if (is_null($todo))  {
+        // Si la tâche n'existe pas
+        if (is_null($this->todo))  {
             // Associe un code "non trouvé" à la réponse HTTP
             http_response_code(404);
-            // Sérialise un message d'errur et l'écrit dans la réponse
-            echo json_encode(["message"=>"L'id de la tâche n'existe pas."]);
-            die();
+            // Génère une réponse qui contient un message d'erreur au format JSON
+            return new JsonResponse([ "message" => "La tâche demandée n'existe pas." ]);
         }
         
-        // Sinon, sérialise les données en JSON et les écrit dans la réponse
-        echo json_encode($todo);
-        die();
+        // Sinon, génère une réponse qui contient les données au format JSON
+        return new JsonResponse($this->todo);
     }
 }
